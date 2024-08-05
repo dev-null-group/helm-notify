@@ -52,7 +52,7 @@ spec:
       volumes:
       - name: "{{ .Release.Name }}-storage"
         persistentVolumeClaim:
-          claimName: "{{ .Release.Name }}-data-claim"
+          claimName: "{{ .Values.namespace }}-data-claim"
 ---
 apiVersion: v1
 kind: Service
