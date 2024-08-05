@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Release.Name }}-dep-notify-gateway"
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: "{{ .Release.Name }}-dep-notify-gateway"
+spec:
+  selector:
+    matchLabels:
+      app: "{{ .Release.Name }}-dep-notify-gateway"
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: "{{ .Release.Name }}-dep-notify-gateway"
+    spec:
+      containers:
+        - name: notify
+          image: {{ .Values.notify.gateway.image }}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: config-map
+              mountPath: /app/config.yaml
+              subPath: config.yaml
+      volumes:
+        - name: config-map
+          configMap:
+            name: "{{ .Release.Name }}-conf-notify"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ .Release.Name }}-svc-notify-gateway"
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: "{{ .Release.Name }}-dep-notify-gateway"
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP

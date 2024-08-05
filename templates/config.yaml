@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Release.Name }}-conf-notify"
+  namespace: {{ .Values.namespace }}
+data:
+  config.yaml: |
+    port: 80
+    debug: false
+
+    kafka:
+      address: "{{ .Values.Kafka.address }}"
+      topic: "notify"
+
+    telegram:
+      token: {{ .Values.notify.telegram.token }}
+      trigger: {{ .Values.notify.telegram.trigger }}
+      aliases:
+        username:
+        {{- range $t := .Values.notify.telegram.aliasUserNameList }}
+          {{ $t.uid }}: {{ $t.name }}
+        {{- end }}
+
+      templateToChats
+      {{- range $t := .Values.notify.telegram.templateToChatList }}
+        {{ $t.templateName }}:
+        {{- range $i := $v.idList }}
+          - {{ $i.id }}
+        {{- end }}
+      {{- end }}
+    
+    templates:
+    {{- range $t := .Values.notify.templateList }}
+      {{ $t.name }}: {{ $t.message }}
+    {{- end }}

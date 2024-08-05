@@ -1,0 +1,27 @@
+namespace: notify
+
+notify:
+  consumer:
+    image: nullstash/notify-consumer:0.3
+
+  gateway:
+    image: nullstash/notify-gateway:0.3
+
+  telegram:
+    token: xxxxxxx-xxxxx_xxxxxxx
+    trigger: ">>"
+    aliasUserNameList:
+      - uid: "{xxxx-xx-xx-xxxx}"
+        name: "@UserName"
+    templateToChatList:
+      - templateName: "test"
+        idList:
+          - id: "111111111111"
+
+  templateList:
+    name: "test"
+    message: "\"{{state}}\" Deploy to Test\n  Username: \"{{username}}\"\n  Pipeline: https://bitbucket.org/group/project/pipelines/results/\"{{build-number}}\""
+
+kafka:
+  image: docker.io/bitnami/kafka:3.5
+  address: kafka:9094

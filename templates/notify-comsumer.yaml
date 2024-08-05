@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Release.Name }}-dep-notify-consumer"
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: "{{ .Release.Name }}-dep-notify-consumer"
+spec:
+  selector:
+    matchLabels:
+      app: "{{ .Release.Name }}-dep-notify-consumer"
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: "{{ .Release.Name }}-dep-notify-consumer"
+    spec:
+      containers:
+        - name: notify
+          image: {{ .Values.notify.consumer.image }}
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: config-map
+              mountPath: /app/config.yaml
+              subPath: config.yaml
+      volumes:
+        - name: config-map
+          configMap:
+            name: "{{ .Release.Name }}-conf-notify"
