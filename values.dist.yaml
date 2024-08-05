@@ -13,14 +13,15 @@ notify:
     aliasUserNameList:
       - uid: "{xxxx-xx-xx-xxxx}"
         name: "@UserName"
+
     templateToChatList:
       - templateName: "test"
         idList:
           - id: "111111111111"
 
   templateList:
-    name: "test"
-    message: "{{state}} Deploy to Test\\n  Username: {{username}}\\n  Pipeline: https://bitbucket.org/group/project/pipelines/results/{{build-number}}"
+    - name: "test"
+      message: "{{state}} Deploy to Test\\n  Username: {{username}}\\n  Pipeline: https://bitbucket.org/group/project/pipelines/results/{{build-number}}"
 
 kafka:
   image: docker.io/bitnami/kafka:3.5
