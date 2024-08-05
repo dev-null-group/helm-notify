@@ -31,5 +31,5 @@ data:
     
     templates:
     {{- range $t := .Values.notify.templateList }}
-      {{ $t.name | quote }}: {{ $t.message | quote }}
+      {{ $t.name | quote }}: "{{ $t.message }}"
     {{- end }}

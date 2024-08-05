@@ -20,7 +20,7 @@ notify:
 
   templateList:
     name: "test"
-    message: "\"{{state}}\" Deploy to Test\n  Username: \"{{username}}\"\n  Pipeline: https://bitbucket.org/group/project/pipelines/results/\"{{build-number}}\""
+    message: "{{state}} Deploy to Test\\n  Username: {{username}}\\n  Pipeline: https://bitbucket.org/group/project/pipelines/results/{{build-number}}"
 
 kafka:
   image: docker.io/bitnami/kafka:3.5
