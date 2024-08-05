@@ -10,13 +10,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: notify.k8s.getic.pro
+    - host: "{{ .Release.Name }}.k8s.getic.pro"
       http:
         paths:
           - pathType: Prefix
             path: /
             backend:
               service:
-                name: "{{ .Release.Name }}-svc-notify"
+                name: "{{ .Release.Name }}-svc-notify-gateway"
                 port:
                   number: 80

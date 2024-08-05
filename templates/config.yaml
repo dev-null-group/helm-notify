@@ -9,27 +9,27 @@ data:
     debug: false
 
     kafka:
-      address: "{{ .Values.Kafka.address }}"
+      address: "{{ .Release.Name }}-svc-kafka:9094"
       topic: "notify"
 
     telegram:
-      token: {{ .Values.notify.telegram.token }}
-      trigger: {{ .Values.notify.telegram.trigger }}
+      token: {{ .Values.notify.telegram.token | quote }}
+      trigger: {{ .Values.notify.telegram.trigger | quote }}
       aliases:
         username:
         {{- range $t := .Values.notify.telegram.aliasUserNameList }}
-          {{ $t.uid }}: {{ $t.name }}
+          {{ $t.uid | quote }}: {{ $t.name | quote }}
         {{- end }}
 
-      templateToChats
+      templateToChats:
       {{- range $t := .Values.notify.telegram.templateToChatList }}
         {{ $t.templateName }}:
-        {{- range $i := $v.idList }}
+        {{- range $i := $t.idList }}
           - {{ $i.id }}
         {{- end }}
       {{- end }}
     
     templates:
     {{- range $t := .Values.notify.templateList }}
-      {{ $t.name }}: {{ $t.message }}
+      {{ $t.name | quote }}: {{ $t.message | quote }}
     {{- end }}

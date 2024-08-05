@@ -16,6 +16,13 @@ spec:
       labels:
         app: "{{ .Release.Name }}-dep-notify-consumer"
     spec:
+      initContainers:
+        - name: wait-kafka
+          image: alpine:latest
+          command: 
+            - /bin/sh
+            - -c
+            - while ! nc -z {{ .Release.Name }}-svc-kafka 9094; do sleep 1; done
       containers:
         - name: notify
           image: {{ .Values.notify.consumer.image }}

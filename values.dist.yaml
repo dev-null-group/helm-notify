@@ -24,4 +24,3 @@ notify:
 
 kafka:
   image: docker.io/bitnami/kafka:3.5
-  address: kafka:9094
