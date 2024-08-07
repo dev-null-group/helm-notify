@@ -1,6 +1,9 @@
 namespace: notify
 
 notify:
+  port: 80
+  debug: false
+
   consumer:
     image: nullstash/notify-consumer:0.3
 
