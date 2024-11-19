@@ -3,12 +3,8 @@ kind: Ingress
 metadata:
   name: "{{ .Release.Name }}-ing"
   namespace: {{ .Values.namespace }}
-  annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "0"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   rules:
     - host: "{{ .Release.Name }}.k8s.getic.pro"
       http:
