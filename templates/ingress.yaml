@@ -4,7 +4,6 @@ metadata:
   name: "{{ .Release.Name }}-ing"
   namespace: {{ .Values.namespace }}
 spec:
-  ingressClassName: traefik
   rules:
     - host: "{{ .Release.Name }}.k8s.getic.pro"
       http:
