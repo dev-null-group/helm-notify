@@ -10,5 +10,5 @@ spec:
     - match: Host(`{{ .Release.Name }}.{{ .Values.notify.host }}`)
       kind: Rule
       services:
-        - name: "{{ .Release.Name }}-svc-notify"
+        - name: "{{ .Release.Name }}-svc-notify-gateway"
           port: 80
