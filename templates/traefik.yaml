@@ -1,0 +1,14 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: "{{ .Release.Name }}-http"
+  namespace: {{ .Values.namespace }}
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`{{ .Release.Name }}.{{ .Values.notify.host }}`)
+      kind: Rule
+      services:
+        - name: "{{ .Release.Name }}-svc-notify"
+          port: 80

@@ -1,6 +1,7 @@
 namespace: notify
 
 notify:
+  host: example.com
   port: 80
   debug: false
 
